@@ -9,9 +9,10 @@ const Switch = require('../model/Switch');
 
 const uri = "mongodb+srv://treCoops:Brand1995@treswitch.lltrm.mongodb.net/treSwitch?retryWrites=true&w=majority";
 mongoose.connect(uri, {
+    useCreateIndex: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true}
-).then(() => {
+    useUnifiedTopology: true
+}).then(() => {
     console.log("MongoDB Connected…");
 }).catch(err => console.log(err))
 
