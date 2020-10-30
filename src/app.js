@@ -18,15 +18,19 @@ mongoose.connect(uri, {
 
 app.get('/', async (req, res)=> {
 
+    res.send('<h1>Hello World!!</h1>');
+});
+
+app.get('getSwitchStatus', async (req, res) => {
+    console.log(req);
     try{
         let swt = await Switch.find({name: "Switch1"});
         console.log(swt);
+        res.status(200).send(swt);
 
     }catch(e){
         res.status(500).send(e.message);
     }
-    res.send('<h1>Hello World!!</h1>');
-
 });
 
 server.listen(PORT, () => {
@@ -45,13 +49,15 @@ io.on('connect', (socket)=> {
         io.emit('message', val);
     });
 
-    // socket.on('init', async (data) => {
-        // try{
-            // let swt = await Switch.find({name: "Switch1"});
-            // console.log(swt);
-            // io.emit('init', "swt");
-        // }catch(e){
-        //     res.status(500).send(e.message);
-        // }
-    // });
+    socket.on('init', async (data) => {
+
+        console.log(data)
+        try{
+            let swt = await Switch.find({name: "Switch1"});
+            console.log(swt);
+            io.emit('init', "swt");
+        }catch(e){
+            res.status(500).send(e.message);
+        }
+    });
 });
