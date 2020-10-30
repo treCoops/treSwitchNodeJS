@@ -1,5 +1,4 @@
 const PORT = process.env.PORT || 5000;
-const { Console } = require('console');
 let express = require('express');
 let app = express();
 let http = require('http');
