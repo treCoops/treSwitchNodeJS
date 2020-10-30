@@ -17,7 +17,16 @@ mongoose.connect(uri, {
 
 
 app.get('/', async (req, res)=> {
+
+    try{
+        let swt = await Switch.find({name: "Switch1"});
+        console.log(swt);
+
+    }catch(e){
+        res.status(500).send(e.message);
+    }
     res.send('<h1>Hello World!!</h1>');
+
 });
 
 server.listen(PORT, () => {
