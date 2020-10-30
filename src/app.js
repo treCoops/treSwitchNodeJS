@@ -21,7 +21,7 @@ app.get('/', async (req, res)=> {
     res.send('<h1>Hello World!!</h1>');
 });
 
-app.get('getSwitchStatus', async (req, res) => {
+app.get('/getSwitchStatus', async (req, res) => {
     console.log(req);
     try{
         let swt = await Switch.find({name: "Switch1"});
