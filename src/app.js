@@ -7,25 +7,25 @@ let server = http.Server(app);
 const mongoose = require('mongoose');
 const Switch = require('../model/Switch');
 
-const uri = "mongodb+srv://treCoops:Brand1995@treswitch.lltrm.mongodb.net/treSwitch?retryWrites=true&w=majority";
-mongoose.connect(uri, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log("MongoDB Connected…");
-}).catch(err => console.log(err))
+// const uri = "mongodb+srv://treCoops:Brand1995@treswitch.lltrm.mongodb.net/treSwitch?retryWrites=true&w=majority";
+// mongoose.connect(uri, {
+//     useCreateIndex: true,
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// }).then(() => {
+//     console.log("MongoDB Connected…");
+// }).catch(err => console.log(err))
 
 
 app.get('/', async (req, res)=> {
 
-    try{
-        let swt = await Switch.find({name: "Switch1"});
-        console.log(swt);
-
-    }catch(e){
-        res.status(500).send(e.message);
-    }
+    // try{
+    //     let swt = await Switch.find({name: "Switch1"});
+    //     console.log(swt);
+    //
+    // }catch(e){
+    //     res.status(500).send(e.message);
+    // }
     res.send('<h1>Hello World!!</h1>');
 
 });
@@ -47,12 +47,12 @@ io.on('connect', (socket)=> {
     });
 
     socket.on('init', async (data) => {
-        try{
-            let swt = await Switch.find({name: "Switch1"});
-            console.log(swt);
-            socket.emit('init', swt);
-        }catch(e){
-            res.status(500).send(e.message);
-        }
+        // try{
+            // let swt = await Switch.find({name: "Switch1"});
+            // console.log(swt);
+            socket.emit('init', "swt");
+        // }catch(e){
+        //     res.status(500).send(e.message);
+        // }
     });
 });
