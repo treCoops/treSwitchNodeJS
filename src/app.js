@@ -26,7 +26,7 @@ app.get('/getSwitchStatus', async (req, res) => {
     try{
         let swt = await Switch.find({name: "Switch1"});
         console.log(swt);
-        res.status(200).send(swt);
+        await res.status(200).json(swt);
 
     }catch(e){
         res.status(500).send(e.message);
