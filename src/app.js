@@ -21,18 +21,6 @@ app.get('/', async (req, res)=> {
     res.send('<h1>Hello World!!</h1>');
 });
 
-app.get('/getSwitchStatus', async (req, res) => {
-    console.log(req);
-    try{
-        let swt = await Switch.find({name: "Switch1"});
-        console.log(swt);
-        await res.status(200).json(swt);
-
-    }catch(e){
-        res.status(500).send(e.message);
-    }
-});
-
 server.listen(PORT, () => {
     console.log("Listening to port: "+PORT);
 });
@@ -43,19 +31,20 @@ let io = require('socket.io')(server);
 io.on('connect', (socket)=> {
     console.log("User Connected.!");
 
-    socket.on('message', (data) => {
-        console.log(data);
-        let val = {switch1: data}
-        io.emit('message', val);
+    socket.on('switch1', async (data) => {
+        await Switch.findByIdAndUpdate(
+            {_id : data.sID},
+            {$set: {status: data.status}},
+            {useFindAndModify: false , new: true});
+
+        let val = {switch1: data.status}
+        io.emit('switch1', val);
     });
 
     socket.on('init', async (data) => {
-
-        console.log(data)
         try{
-            let swt = await Switch.find({name: "Switch1"});
-            console.log(swt);
-            io.emit('init', "swt");
+            let swt = await Switch.find({name: data});
+            io.emit('init', swt);
         }catch(e){
             res.status(500).send(e.message);
         }
